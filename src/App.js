@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import {
+  Container,
+  Row,
+  Col,
+} from 'reactstrap';
 import './App.css';
+import FeedList from './components/FeedList';
+import Header from './components/Header';
 
 class App extends Component {
+  
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Container fluid>
+        <Header />
+        <Row>
+          <Col sm={3}/>
+          <Col className='bg-light' sm={6}>
+            <FeedList />
+          </Col>
+          <Col sm={3}/>
+        </Row>
+      </Container>
     );
   }
 }
