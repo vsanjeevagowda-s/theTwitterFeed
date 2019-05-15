@@ -1,5 +1,6 @@
 import { takeEvery } from 'redux-saga/effects'
-import { getFeeds, searchFeeds, incrementNotification } from './actions/feed.actions';
+import { getFeeds, searchFeeds, incrementNotification,
+  showNotifications, showError } from './actions/feed.actions';
 
 
 export function *watchGetFeeds(){
@@ -12,4 +13,12 @@ export function *watchSearchFeeds(){
 
 export function *incrementNotificationWatch(){
   yield takeEvery('INCREMENT_NOTIFICATION_WATCH', incrementNotification)
+}
+
+export function *showNotificationsWatcher(){
+  yield takeEvery('SHOW_NOTIFICATION_WATCH', showNotifications)
+}
+
+export function *showErrorWatcher(){
+  yield takeEvery('SHOW_ERROR_WATCHER', showError)
 }

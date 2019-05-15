@@ -53,3 +53,7 @@ body{
   width: 20px;
   border-radius: 50%;
 }
+
+.notification-feed{
+  background-color:  #add9e0;
+}

@@ -4,6 +4,8 @@ import {
   SEARCH_FEED_FAILURE,
   INCREMENT_NOTIFICATION_SUCCESS,
   INCREMENT_NOTIFICATION_FAILURE,
+  SHOW_NOTIFICATIONS,
+  SHOW_ERROR
 } from '../actions/feed.actions.js';
 
 
@@ -12,6 +14,8 @@ const initialState = {
   page: 1,
   searchInput: 'nodejs',
   notificationCount: 0,
+  notifications: [],
+  error: '',
 }
 
 const feed = (state = initialState, action) => {
@@ -30,9 +34,31 @@ const feed = (state = initialState, action) => {
       page: 1,
     }
     case INCREMENT_NOTIFICATION_SUCCESS:
+    console.log('action', action);
+    const newArr = [];
+    state.notifications.map(i => newArr.push(i));
+    newArr.push(action.input.data)
+    console.log('newArr ==>', newArr);
     return {
       ...state,
       notificationCount: state.notificationCount + 1,
+      notifications: newArr,
+    }
+    case SHOW_NOTIFICATIONS:
+    const newfeedArr = [];
+    state.feeds.map(i => newfeedArr.push(i));
+    state.notifications.map(i => newfeedArr.unshift(i));
+    console.log('newfeedArr ==>', newfeedArr);
+    return{
+      ...state,
+      feeds: newfeedArr,
+      notifications: [],
+      notificationCount: 0
+    }
+    case SHOW_ERROR:
+    return {
+      ...state,
+      error: action.error.data.error,
     }
     default:
     return state;

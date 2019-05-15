@@ -4,7 +4,9 @@ import reducer from './reducers';
 import {
   watchGetFeeds,
   watchSearchFeeds,
-  incrementNotificationWatch
+  incrementNotificationWatch,
+  showNotificationsWatcher,
+  showErrorWatcher
 } from './sagas';
 
 const sagaMiddleware = createSagaMiddleware()
@@ -16,5 +18,6 @@ const store = createStore(
 sagaMiddleware.run(watchGetFeeds);
 sagaMiddleware.run(watchSearchFeeds);
 sagaMiddleware.run(incrementNotificationWatch);
-
+sagaMiddleware.run(showNotificationsWatcher);
+sagaMiddleware.run(showErrorWatcher);
 export default store;

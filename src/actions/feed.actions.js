@@ -7,8 +7,11 @@ export const SEARCH_FEED_SUCCESS = 'SEARCH_FEED_SUCCESS';
 export const SEARCH_FEED_FAILURE = 'SEARCH_FEED_FAILURE';
 export const INCREMENT_NOTIFICATION_SUCCESS = 'INCREMENT_NOTIFICATION_SUCCESS';
 export const INCREMENT_NOTIFICATION_FAILURE = 'INCREMENT_NOTIFICATION_FAILURE';
+export const SHOW_NOTIFICATIONS = 'SHOW_NOTIFICATIONS';
+export const SHOW_ERROR = 'SHOW_ERROR';
 
 const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+// const ROOT_URL = 'http://localhost:1337';
 
 const requestData = async (path) => {
   const resp = await fetch(path);
@@ -18,7 +21,6 @@ const requestData = async (path) => {
 
 export function* getFeeds(input) {
   const { data } = input;
-  console.log('data', data);
   const URL = `${ROOT_URL}/feeds?searchInput=${data.searchInput}&page=${data.page}`;
   try {
     const resp = yield call(requestData, URL);
@@ -29,7 +31,6 @@ export function* getFeeds(input) {
 };
 
 export function* searchFeeds(input) {
-  console.log('data ===>', input);
   const URL = `${ROOT_URL}/searchFeed?searchInput=${input.searchInput}`;
   try {
     const resp = yield call(requestData, URL);
@@ -44,5 +45,21 @@ export function* incrementNotification(input){
     yield put({ type: INCREMENT_NOTIFICATION_SUCCESS, input });
   }catch(error){
     yield put({ type: INCREMENT_NOTIFICATION_FAILURE, error });
+  }
+}
+
+export function* showNotifications() {
+  try{
+    yield put({ type: SHOW_NOTIFICATIONS });
+  }catch(error){
+    yield put({ type:'' });
+  }
+}
+
+export function* showError(error) {
+  try{
+    yield put({ type: SHOW_ERROR, error });
+  }catch(error){
+    yield put({ type:'' });
   }
 }

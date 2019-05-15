@@ -9,14 +9,13 @@ import {
 
 const io = sailsIOClient(socketIOClient);
 io.sails.url = process.env.REACT_APP_ROOT_URL;
+// io.sails.url = 'http://localhost:1337';
 
 class Feed extends Component {
   render() {
     const { item } = this.props;
-    console.log('item', item);
-    console.log('=========')
     return (
-      <Row className='border p-2'>
+      <Row className={`border p-2${item.notification ? 'notification-feed' : ''}` }>
         <Col sm={2} xs={2}>
           <CardImg src={item.user.profile_image_url_https}
             className='border-radius-50pc' />
@@ -50,6 +49,7 @@ class FeedList extends Component {
 
   handleNotifiySuccessEvent(data){
     const { incrementNotification } = this.props;
+    console.log('handleNotifiySuccessEvent', data);
     incrementNotification(data);
   }
 
@@ -79,11 +79,16 @@ class FeedList extends Component {
   }
 
   render() {
-    const { feeds, page, notificationCount } = this.props;
+    const { feeds, page, notificationCount, showNotifications, error } = this.props;
     return <div>
+      {error && <Row className='mt-2'>
+        <Col>
+          <div className='bg-danger text-center text-light  cursor-pointer'>{error}</div>
+        </Col>
+      </Row>}
       {(notificationCount > 0) && <Row className='mt-2'>
         <Col>
-          <div onClick={() => this.showNotifications()} className='text-center text-secondary  cursor-pointer'>{notificationCount} more Tweet(s)</div>
+          <div onClick={() => showNotifications()} className='text-center text-secondary  cursor-pointer'>{notificationCount} new Tweet(s)</div>
         </Col>
       </Row>}
       {(feeds.length < 1) && <Row className='mt-2'>
