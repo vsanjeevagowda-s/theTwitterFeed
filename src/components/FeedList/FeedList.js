@@ -79,12 +79,22 @@ class FeedList extends Component {
   }
 
   render() {
-    const { feeds, page } = this.props;
+    const { feeds, page, notificationCount } = this.props;
     return <div>
+      {(notificationCount > 0) && <Row className='mt-2'>
+        <Col>
+          <div onClick={() => this.showNotifications()} className='text-center text-secondary  cursor-pointer'>{notificationCount} more Tweet(s)</div>
+        </Col>
+      </Row>}
+      {(feeds.length < 1) && <Row className='mt-2'>
+        <Col>
+          <div className='text-center text-secondary  cursor-pointer'>No more Tweet(s)</div>
+        </Col>
+      </Row>}
       {feeds.map(item => {
         return <Feed item={item} key={item.id} />
       })}
-      {(page !== 10) && <Row className='mt-2'>
+      {(((page !== 10) && (feeds.length > 0))) && <Row className='mt-2'>
         <Col>
           <div onClick={() => this.loadMoreFeeds()} className='text-center text-secondary  cursor-pointer'>Load More...</div>
         </Col>
